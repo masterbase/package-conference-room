@@ -509,6 +509,7 @@ local content = switcher(function()
             table.insert(views, v)
         end
     end
+    return views
 end)
 
 function node.render()
