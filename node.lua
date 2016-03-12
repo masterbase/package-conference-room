@@ -442,7 +442,7 @@ local content = switcher(function()
             return content
         end;
         draw = function(content)
-            CONFIG.font:write(400, 180, "Other talks", 80, CONFIG.foreground_color.rgba())
+            CONFIG.font:write(400, 180, "Upcoming talks", 80, CONFIG.foreground_color.rgba())
             spacer:draw(0, 280, WIDTH, 282, 0.6)
             for _, func in ipairs(content) do
                 func()
@@ -456,7 +456,7 @@ local content = switcher(function()
             if not current_talk then
                 CONFIG.font:write(400, 180, "Next talk", 80, CONFIG.foreground_color.rgba())
                 spacer:draw(0, 300, WIDTH, 302, 0.6)
-                CONFIG.font:write(400, 310, "Nope. That's it.", 50, CONFIG.foreground_color.rgba())
+                CONFIG.font:write(400, 310, "No more talks today", 50, CONFIG.foreground_color.rgba())
             else
                 local delta = current_talk.start_unix - get_now()
                 if delta > 0 then
