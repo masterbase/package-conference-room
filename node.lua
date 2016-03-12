@@ -505,8 +505,9 @@ local content = switcher(function()
     }}
     views = {}
     for k,v in pairs(viewsAvailable) do
+        print("checking ", k)
         if v.time > 0 then
-            table.insert(views, v)
+            views[#views+1]=v
         end
     end
     return views
