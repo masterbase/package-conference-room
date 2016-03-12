@@ -1,5 +1,5 @@
 {
-    "name": "Conference Room Announcement",
+    "name": "Conference Room Announcement Masterbase",
     "author": "mail@masterbase.at",
     "desc": "Show information about upcoming talks, based on package-conference-room by dividuum",
     "repository": "https://github.com/masterbase/package-conference-room"
