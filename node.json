@@ -1,5 +1,5 @@
 {
-    "name": "Room Preview",
+    "name": "Room Preview Masterbase",
     "permissions": {
         "network": "Has to fetch schedule from remote site"
     },

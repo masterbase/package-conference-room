@@ -508,6 +508,7 @@ local content = switcher(function()
         print("checking ", k)
         if v.time > 0 then
             views[#views+1]=v
+            print("added ", k)
         end
     end
     return views
