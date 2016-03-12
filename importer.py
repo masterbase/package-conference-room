@@ -52,9 +52,9 @@ def get_schedule(url):
                 title = text_or_empty(event, 'title'),
                 place = text_or_empty(event, 'room'),
                 speakers = [
-                    if person is not None:
-                        unicode(person.text.strip()) 
                     for person in persons
+                        if person is not None:
+                            unicode(person.text.strip()) 
                 ] if persons else [],
                 lang = text_or_empty(event, 'language') or "unk",
                 id = event.attrib["id"],
