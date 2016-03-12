@@ -84,6 +84,21 @@ function check_next_talk()
             return a.place < b.place
         end
     end)
+    upcoming_talks = {}
+    for room, talk in pairs(room_next) do
+        if current_talk then
+            upcoming_talks[#upcoming_talks + 1] = talk
+        end
+    end
+    table.sort(upcoming_talks, function(a, b) 
+        if a.start_unix < b.start_unix then
+            return true
+        elseif a.start_unix > b.start_unix then
+            return false
+        else
+            return a.place < b.place
+        end
+    end)
 end
 
 function wrap(str, limit, indent, indent1)
@@ -229,7 +244,7 @@ function switcher(get_screens)
 end
 
 local content = switcher(function() 
-    return {{
+    viewsAvailable = {{
         time = CONFIG.other_rooms,
         prepare = function()
             local content = {}
@@ -332,6 +347,108 @@ local content = switcher(function()
             end
         end
     }, {
+        time = CONFIG.current_room_upcoming,
+        prepare = function()
+            local content = {}
+
+            local function add_content(func)
+                content[#content+1] = func
+            end
+
+            local function mk_spacer(y)
+                return function()
+                    spacer:draw(0, y, WIDTH, y+2, 0.6)
+                end
+            end
+
+            local function mk_talkmulti(y, talk, is_running)
+                local alpha
+                if is_running then
+                    alpha = 0.5
+                else
+                    alpha = 1.0
+                end
+
+                local line_idx = 999999
+                local top_line
+                local bottom_line
+                local function next_line()
+                    line_idx = line_idx + 1
+                    if line_idx > #talk.lines then
+                        line_idx = 2
+                        top_line = talk.lines[1]
+                        bottom_line = talk.lines[2] or ""
+                    else
+                        top_line = bottom_line
+                        bottom_line = talk.lines[line_idx]
+                    end
+                end
+
+                next_line()
+
+                local switch = sys.now() + 3
+
+                return function()
+                    CONFIG.font:write(30, y, talk.start_str, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(190, y, rooms[talk.place].name_short, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(400, y, top_line, 30, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(400, y+28, bottom_line, 30, CONFIG.foreground_color.rgb_with_a(alpha*0.6))
+
+                    if sys.now() > switch then
+                        next_line()
+                        switch = sys.now() + 1
+                    end
+                end
+            end
+
+            local function mk_talk(y, talk, is_running)
+                local alpha
+                if is_running then
+                    alpha = 0.5
+                else
+                    alpha = 1.0
+                end
+
+                return function()
+                    CONFIG.font:write(30, y, talk.start_str, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(190, y, rooms[talk.place].name_short, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(400, y, talk.title, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                end
+            end
+
+            local y = 300
+            local time_sep = false
+            if #upcoming_talks > 0 then
+                for idx, talk in ipairs(upcoming_talks) do
+                    if not time_sep and talk.start_unix > get_now() then
+                        if idx > 1 then
+                            y = y + 5
+                            add_content(mk_spacer(y))
+                            y = y + 20
+                        end
+                        time_sep = true
+                    end
+                    if talk.lines then
+                        add_content(mk_talkmulti(y, talk, not time_sep))
+                    else
+                        add_content(mk_talk(y, talk, not time_sep))
+                    end
+                    y = y + 62
+                end
+            else
+                CONFIG.font:write(400, 330, "No other talks.", 50, CONFIG.foreground_color.rgba())
+            end
+
+            return content
+        end;
+        draw = function(content)
+            CONFIG.font:write(400, 180, "Other talks", 80, CONFIG.foreground_color.rgba())
+            spacer:draw(0, 280, WIDTH, 282, 0.6)
+            for _, func in ipairs(content) do
+                func()
+            end
+        end
+    }, {
         time = CONFIG.current_room,
         prepare = function()
         end;
@@ -386,6 +503,12 @@ local content = switcher(function()
             CONFIG.font:write(400, 520, current_room.hashtag, 50, CONFIG.foreground_color.rgba())
         end
     }}
+    views = {}
+    for k,v in pairs(viewsAvailable) do
+        if v.time > 0 then
+            table.insert(views, v)
+        end
+    end
 end)
 
 function node.render()

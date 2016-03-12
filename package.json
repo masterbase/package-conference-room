@@ -1,6 +1,6 @@
 {
     "name": "Conference Room Announcement",
-    "author": "fw@dividuum.de",
-    "desc": "Show information about upcoming talks",
-    "repository": "https://github.com/info-beamer/package-conference-room"
+    "author": "mail@masterbase.at",
+    "desc": "Show information about upcoming talks, based on package-conference-room by dividuum",
+    "repository": "https://github.com/masterbase/package-conference-room"
 }

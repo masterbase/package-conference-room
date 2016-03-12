@@ -77,6 +77,14 @@
         "hint": "How long to display current talk information",
         "default": 15
     }, {
+        "title": "Current Room Upcoming (seconds)",
+        "ui_width": 4,
+        "name": "current_room_upcoming",
+        "doc_link": true,
+        "type": "duration",
+        "hint": "How long to display upcoming talks for current room information",
+        "default": 15
+    }, {
         "title": "Room info (seconds)",
         "ui_width": 4,
         "name": "room_info",
