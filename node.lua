@@ -88,7 +88,7 @@ function check_next_talk()
 
     upcoming_talks = {}
     for idx, talk in ipairs(schedule) do
-        if current_room.name == talk.place and talk.start_unix + 25 * 60 > now then
+        if current_room.name == talk.place and talk.start_unix > now then
             upcoming_talks[#upcoming_talks + 1] = talk
         end
         if #upcoming_talks >= CONFIG.current_room_upcoming_num then break end
