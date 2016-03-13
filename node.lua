@@ -102,8 +102,8 @@ function check_next_talk()
                 talk.lines[2] = table.concat(talk.speakers, ", ")
             end
         end
-        print ("Talk: '", talk.tile, "'")
-        print ("Speaers: '", table.concat(talk.speakers, ""), "'")
+        print ("Talk: '" .. talk.title .. "'")
+        print ("Speakers: '" .. table.concat(talk.speakers, "") .. "'")
     end
     table.sort(upcoming_talks, function(a, b) 
         if a.start_unix < b.start_unix then
