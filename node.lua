@@ -91,7 +91,7 @@ function check_next_talk()
         if current_room.name == talk.place and talk.start_unix + 25 * 60 > now then
             upcoming_talks[#upcoming_talks + 1] = talk
         end
-        if #upcoming_talks >= current_room_upcoming_num then break end
+        if #upcoming_talks >= CONFIG.current_room_upcoming_num then break end
     end
     for room, talk in pairs(room_next) do
         talk.slide_lines = wrap(talk.title, 30)
