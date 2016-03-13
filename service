@@ -66,7 +66,7 @@ def main():
 
         print >>sys.stderr, "updated schedule"
 
-        for i in xrange(60):
+        for i in xrange(30):
             now, ts = current_time()
             print >>sys.stderr, "time is", now, ts
             send_clock(now, ts)

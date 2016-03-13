@@ -97,13 +97,11 @@ function check_next_talk()
         talk.slide_lines = wrap(talk.title, 30)
 
         if #talk.title > 25 or #table.concat(talk.speakers, "") > 2 then
-            talk.lines = wrap(talk.title, 70)
-            if #talk.lines >= 1 then
+            talk.lines = wrap(talk.title, 75)
+            if #talk.lines == 1 then
                 talk.lines[2] = table.concat(talk.speakers, ", ")
             end
         end
-        print ("Talk: '" .. talk.title .. "'")
-        print ("Speakers: '" .. table.concat(talk.speakers, "") .. "'")
     end
     table.sort(upcoming_talks, function(a, b) 
         if a.start_unix < b.start_unix then
@@ -520,10 +518,8 @@ local content = switcher(function()
     }}
     views = {}
     for k,v in pairs(viewsAvailable) do
-        print("checking ", k)
         if v.time > 0 then
             views[#views+1]=v
-            print("added ", k)
         end
     end
     return views
