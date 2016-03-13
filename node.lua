@@ -93,7 +93,7 @@ function check_next_talk()
         end
         if #upcoming_talks >= CONFIG.current_room_upcoming_num then break end
     end
-    for room, talk in pairs(room_next) do
+    for idx, talk in pairs(upcoming_talks) do
         talk.slide_lines = wrap(talk.title, 30)
 
         if #talk.title > 25 then
