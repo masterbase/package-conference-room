@@ -77,14 +77,6 @@
         "hint": "How long to display current talk information",
         "default": 15
     }, {
-        "title": "Current Room Upcoming (seconds)",
-        "ui_width": 4,
-        "name": "current_room_upcoming",
-        "doc_link": true,
-        "type": "duration",
-        "hint": "How long to display upcoming talks for current room information",
-        "default": 15
-    }, {
         "title": "Room info (seconds)",
         "ui_width": 4,
         "name": "room_info",
@@ -92,7 +84,23 @@
         "type": "duration",
         "hint": "How long to display room information",
         "default": 10
-    },  
+    }, {
+        "title": "Cur. Room Upcoming (seconds)",
+        "ui_width": 4,
+        "name": "current_room_upcoming",
+        "doc_link": true,
+        "type": "duration",
+        "hint": "How long to display upcoming talks for current room information",
+        "default": 15
+    }, {
+        "title": "Cur. Room Upcoming (#talks)",
+        "ui_width": 4,
+        "name": "current_room_upcoming_num",
+        "doc_link": true,
+        "type": "integer",
+        "hint": "How many upcoming talks to display for current room",
+        "default": 5
+    }, 
 
     {
         "title": "Scheduling",

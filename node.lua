@@ -37,6 +37,7 @@ hosted_init()
 local base_time = N.base_time or 0
 local current_talk
 local all_talks = {}
+local upcoming_talks = {}
 local day = 0
 
 function get_now()
@@ -84,10 +85,22 @@ function check_next_talk()
             return a.place < b.place
         end
     end)
+
     upcoming_talks = {}
-    for room, talk in pairs(room_next) do
-        if current_talk then
+    for idx, talk in ipairs(schedule) do
+        if current_room.name == talk.place and talk.start_unix + 25 * 60 > now then
             upcoming_talks[#upcoming_talks + 1] = talk
+        end
+        if #upcoming_talks >= current_room_upcoming_num then break
+    end
+    for room, talk in pairs(room_next) do
+        talk.slide_lines = wrap(talk.title, 30)
+
+        if #talk.title > 25 then
+            talk.lines = wrap(talk.title, 60)
+            if #talk.lines == 1 then
+                talk.lines[2] = table.concat(talk.speakers, ", ")
+            end
         end
     end
     table.sort(upcoming_talks, function(a, b) 
@@ -390,9 +403,9 @@ local content = switcher(function()
 
                 return function()
                     CONFIG.font:write(30, y, talk.start_str, 50, CONFIG.foreground_color.rgb_with_a(alpha))
-                    CONFIG.font:write(190, y, rooms[talk.place].name_short, 50, CONFIG.foreground_color.rgb_with_a(alpha))
-                    CONFIG.font:write(400, y, top_line, 30, CONFIG.foreground_color.rgb_with_a(alpha))
-                    CONFIG.font:write(400, y+28, bottom_line, 30, CONFIG.foreground_color.rgb_with_a(alpha*0.6))
+                    --CONFIG.font:write(190, y, rooms[talk.place].name_short, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(190, y, top_line, 30, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(190, y+28, bottom_line, 30, CONFIG.foreground_color.rgb_with_a(alpha*0.6))
 
                     if sys.now() > switch then
                         next_line()
@@ -412,7 +425,7 @@ local content = switcher(function()
                 return function()
                     CONFIG.font:write(30, y, talk.start_str, 50, CONFIG.foreground_color.rgb_with_a(alpha))
                     CONFIG.font:write(190, y, rooms[talk.place].name_short, 50, CONFIG.foreground_color.rgb_with_a(alpha))
-                    CONFIG.font:write(400, y, talk.title, 50, CONFIG.foreground_color.rgb_with_a(alpha))
+                    CONFIG.font:write(190, y, talk.title, 50, CONFIG.foreground_color.rgb_with_a(alpha))
                 end
             end
 
