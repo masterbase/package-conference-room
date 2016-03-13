@@ -96,7 +96,7 @@ function check_next_talk()
     for idx, talk in pairs(upcoming_talks) do
         talk.slide_lines = wrap(talk.title, 30)
 
-        if #talk.title > 25 or table.concat(talk.speakers, "") ~= " " then
+        if #talk.title > 25 or #table.concat(talk.speakers, "") > 2 then
             talk.lines = wrap(talk.title, 60)
             if #talk.lines == 1 then
                 talk.lines[2] = table.concat(talk.speakers, ", ")
