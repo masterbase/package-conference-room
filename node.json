@@ -77,6 +77,14 @@
         "hint": "How long to display current talk information",
         "default": 15
     }, {
+        "title": "Current Talk (minutes)",
+        "ui_width": 4,
+        "name": "current_talk_delay",
+        "doc_link": true,
+        "type": "duration",
+        "hint": "How long to display current talk information after scheduled start",
+        "default": 25
+    }, {
         "title": "Room info (seconds)",
         "ui_width": 4,
         "name": "room_info",
@@ -85,7 +93,7 @@
         "hint": "How long to display room information",
         "default": 10
     }, {
-        "title": "Cur. Room Upcoming (seconds)",
+        "title": "Cur. Room Upcoming (secs)",
         "ui_width": 4,
         "name": "current_room_upcoming",
         "doc_link": true,
