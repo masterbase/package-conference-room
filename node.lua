@@ -347,7 +347,9 @@ local content = switcher(function()
                     y = y + 62
                 end
             else
-                CONFIG.font:write(400, 330, "No other talks.", 50, CONFIG.foreground_color.rgba())
+                add_content(function ()
+                    CONFIG.font:write(400, 330, "No other talks.", 50, CONFIG.foreground_color.rgba())
+                end)
             end
 
             return content
@@ -449,7 +451,9 @@ local content = switcher(function()
                     y = y + 62
                 end
             else
-                CONFIG.font:write(400, 330, "No other talks.", 50, CONFIG.foreground_color.rgba())
+                add_content(function ()
+                    CONFIG.font:write(400, 330, "No upcoming talks.", 50, CONFIG.foreground_color.rgba())
+                end)
             end
 
             return content
